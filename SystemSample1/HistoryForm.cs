@@ -1,0 +1,51 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace SystemSample1
+{
+    public partial class HistoryForm : Form
+    {
+        private Form activeForm = null;
+
+        public HistoryForm()
+        {
+            InitializeComponent();
+            viewHistory();
+        }
+
+        private void openHistory(Form childForm)
+        {
+            if (activeForm != null)
+
+                activeForm.Close();
+            childForm.TopLevel = false;
+            childForm.FormBorderStyle = FormBorderStyle.None;
+            childForm.Dock = DockStyle.Fill;
+            panelHistory.Controls.Add(childForm);
+            panelHistory.Tag = childForm;
+            childForm.BringToFront();
+            childForm.Show();
+        }
+        public void viewHistory()
+        {
+            openHistory(new historyOrder());
+        }
+
+        private void btnHistoryOrder_Click(object sender, EventArgs e)
+        {
+            openHistory(new historyOrder());
+        }
+
+        private void btnActivityLog_Click(object sender, EventArgs e)
+        {
+            openHistory(new historyLog());
+        }
+    }
+}
